@@ -1,0 +1,13 @@
+.button-container {
+    flex-direction: column;
+    ;
+  }
+
+  #hotel-rooms-btn,
+  #users-btn,
+  #bookings-btn {
+    background-color: bisque;
+    width: auto;
+    display: block;
+    margin-bottom: 30px;
+  }

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Abbott Hotel</title>
+    <meta name="description" content="Abbott hotel">
+    <meta name="author" content="Abbott hotel">
+    <meta name="Keywords" content="Abbott, hotel">
+    <!-- boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <!-- slick -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+    <link rel="stylesheet" href="style/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="style/account.css">
+    <style>
+        .btnBook {
+            background-color: #C7A55B;
+        }
+    </style>
+    <script>
+        var sortOrder = 'BookingId';
+        var currCheckOut = '';
+        var currCheckIn = '';
+        var currEmail = sessionStorage.getItem("email");
+        var CheckInD = '';
+        var CheckOutD = '';
+        var roomNum = 0;
+        var usrId = 0;
+        var roomty = { 'Single Bed Room': 1, 'Executive Suite Room': 2, 'Suite Room': 3, 'Double Beds Room': 4 };
+        var tableHead = '<tr><th>Booking ID</th><th>Arrival Date</th><th>Departure Date</th><th>Booking Bill</th><th> Payment Status</th><th>PayNow</th></tr>'
+        var totalPayment = 0;
+
+
+
+
+
+
+        $(document).ready(function () {
+            // Existing code...
+            $("#loginUser").html(sessionStorage.getItem("email"));
+            retrieveBookings(currEmail);
+            getUserId(currEmail);
+
+            // New Booking functionality
+            $("#newBooking").click(function () {
+                $("#bookingForm").show();
+            });
+
+
+            $("#confirmBooking").click(function () {
+                var arrivalDate = $("#arrivalDate").val();
+                var departureDate = $("#departureDate").val();
+                var roomType = $("#roomType").val();
+                var numRooms = $("#numRooms").val();
+
+                // Perform data validation
+                if (arrivalDate === '' || departureDate === '' || roomType === '' || numRooms === '') {
+                    alert('Please fill in all the fields');
+                    return;
+                }
+
+                // Post the data to the "bookings" table
+                var bookingData = {
+                    arrivalDate: arrivalDate,
+                    departureDate: departureDate,
+                    roomType: roomType,
+                    numRooms: numRooms
+                };
+
+                $.ajax({
+                    url: "/api/bookings",
+                    type: "POST",
+                    dataType: "json",
+                    data: bookingData,
+                    error: function (jqxhr, status, errorThrown) {
+                        showModalPopup("AJAX error: " + jqxhr.responseText);
+                    }
+                }).done(function () {
+                    alert("Booking submitted successfully");
+                    $("#bookingForm").hide();
+                    // Optionally, you can refresh the "Your Order" table here
+                });
+            });
+
+
+            $("#CheckAvailability").click(function () {
+                CheckInD = $("#arrivalDate").val();
+                CheckOutD = $("#departureDate").val();
+
+
+                $.ajax({
+                    url: "/api/rooms/" + currEmail, // Replace with the appropriate API endpoint
+                    type: "GET",
+                    headers: { 'x-auth-checkin': CheckInD, 'x-auth-checkout': CheckOutD },
+
+                    dataType: "json",
+                    error: function (jqxhr, status, errorThrown) {
+                    }
+                }).done(function (hotelroomList) {
+                    var result = "";
+                    console.log("inside ajax check");
+                    var result = '<tr><th id="RoomIdTh">RoomId</th>' +
+                        '<th id="RoomTypeTh">RoomType</th>' +
+                        '<th id="PricePerNightTh">PricePerNight</th>' +
+                        '<th id="PricePerNightTh">RoomPicture</th>' +
+                        '<th id="Book">Book</th>' + '</tr>';
+
+                    for (var i = 0; i < hotelroomList.length; i++) {
+                        var hotelroom = hotelroomList[i];
+                        result += '<tr ' + hotelroom.RoomId + '\')">';
+                        result += '<td>' + hotelroom.RoomId + '</td>';
+                        result += '<td>' + hotelroom.RoomType + '</td>';
+                        result += '<td>' + hotelroom.PricePerNight + '</td>';
+                        result += '<td><img width="150" src="http://localhost:8181/api/documents/' + roomty[hotelroom.RoomType] + '" </td>';
+                        // result += '<td><button class="btnBook" onclick="bookRoom(\'' + hotelroom.RoomId + ',\'' + hotelroom.PricePerNight + '\')">Book Now</button></td>';
+                        // result += '<td><button class="btnBook" onclick="bookRoom(\'' + hotelroom.RoomId  + '\')">Book Now</button></td>';
+                        result += '<td><button class="btnBook" onclick="bookRoom(\'' + hotelroom.RoomId + '\',\'' + hotelroom.PricePerNight + '\')">Book Now</button></td>';
+                        result += '</tr>';
+                    }
+
+                    $("#listTable").html(result);
+                });
+
+            });
+
+
+
+        });
+
+
+        function retrieveRooms() {
+            console.log("Retrieve rooms" + sortOrder);
+            $.ajax({ // future: headers for authentication, url parameters for sorting, etc.
+                // url: "/api/users" + "?sortOrder=" + sortOrder,
+                url: "/api/users" + "?sortOrder=" + sortOrder,
+
+                headers: { 'x-auth-checkin': sessionStorage.getItem('email'), 'x-auth-password': sessionStorage.getItem('password') },
+                type: "GET",
+                dataType: "json",
+                error: function (jqxhr, status, errorThrown) {
+                    if (jqxhr.status == 403) {
+                        loginFailedHandler();
+                    } else {
+                        alert("AJAX error: " + jqxhr.responseText + ", status: " + jqxhr.status);
+                    }
+                }
+            }).done(function (userList) {
+                if (userList.Role == "Admin") {
+                    console.log("admin");
+                    window.location.assign("hotelrooms.html");
+
+                } else {
+                    window.location.assign("useraccount.html");
+
+                }
+                $("#sign_div").hide();
+                $("#mainAppPane").show();
+                $("#listPane").html("welcome " + userList.UserEmail);
+
+            });
+        }
+        // Function to retrieve booking data based on user ID
+        function retrieveBookings(email) {
+            $.ajax({
+                url: "/api/bookings/" + email, // Replace with the appropriate API endpoint
+                type: "GET",
+                dataType: "json",
+                error: function (jqxhr, status, errorThrown) {
+                }
+            }).done(function (bookings) {
+
+                $("#yourOrderTable").html("");
+                var tableRows = tableHead;
+                for (var i = 0; i < bookings.length; i++) {
+                    var booking = bookings[i];
+                    // console.log(booking);
+                    tableRows += '<tr>';
+                    tableRows += '<td>' + booking.BookingId + '</td>';
+                    tableRows += '<td>' + booking.CheckInDate + '</td>';
+                    tableRows += '<td>' + booking.CheckOutDate + '</td>';
+                    tableRows += '<td>' + booking.BookingBill + '</td>';
+                    tableRows += '<td>' + booking.PaymentStatus + '</td>';
+                    if (booking.PaymentStatus == "Unpaid") {
+                        tableRows += '<td><button   class="btnBook" onclick="payNow(\'' + booking.BookingBill + '\')">Pay Now</button></td>';
+
+
+
+
+                    } else {
+                        tableRows += '<td><button   class="btnBook" onclick="cancelBooking(\'' + booking.BookingId + '\')">Cancel Now</button></td>';
+
+
+
+                    }
+
+                    tableRows += '</tr>';
+
+                }
+
+                $("#yourOrderTable").append(tableRows);
+
+            });
+        }
+
+        function bookRoom(roomNum, price) {
+            var ci = new Date(CheckInD);
+            var co = new Date(CheckOutD);
+            console.log("roomnum and price" + roomNum + price);
+            var diff = parseInt(Math.abs(co.getTime() - ci.getTime()) / 1000 / 60 / 60 / 24);
+            var priceTotal = price * diff;
+            console.log("priceTotal:" + priceTotal);
+            console.log("inside booRoom" + CheckInD + CheckOutD + usrId);
+            var rbooking = { UserId: usrId, RoomId: roomNum, CheckInDate: CheckInD, CheckOutDate: CheckOutD, BookingStatus: 'Pending', BookingBill: priceTotal, PaymentStatus: 'Unpaid' };
+            $.ajax({
+                url: "/api/bookings/", // Replace with the appropriate API endpoint
+                type: "POST",
+                headers: { 'x-auth-checkin': CheckInD, 'x-auth-checkout': CheckOutD },
+                data: rbooking,
+                dataType: "json",
+                error: function (jqxhr, status, errorThrown) {
+                }
+            }).done(function (hotelroomList) {
+                $("#listTable").html("booking successfully.")
+                alert("booking successfully.");
+                retrieveBookings(currEmail);
+
+
+            });
+
+
+        }
+
+
+        function cancelBooking(cbookingId) {
+            $.ajax({
+                url: "/api/bookings/delete/" + cbookingId,
+                type: "DELETE",
+                dataType: "json",
+                error: function (jqxhr, status, errorThrown) {
+
+                    showModalPopup("AJAX error: " + jqxhr.responseText);
+                }
+            }).done(function () {
+                showModalPopup("User deleted successfully");
+                retrieveBookings(currEmail);
+                $("#viewAddEditPane").hide();
+                currCode = '';
+            });
+        }
+
+
+
+
+        //get login user id
+        function getUserId(e) {
+            $.ajax({
+                url: "/api/users/" + e, // Replace with the appropriate API endpoint
+                type: "GET",
+                // headers: { 'x-auth-checkin': CheckInD, 'x-auth-checkout': CheckOutD },
+                // data: rbooking,
+                dataType: "json",
+                error: function (jqxhr, status, errorThrown) {
+                }
+            }).done(function (user) {
+
+                usrId = user.UserId;
+                console.log("user id:" + usrId);
+
+
+
+            });
+
+
+        }
+
+        function payNow(Bill) {
+            sessionStorage.setItem('totalPayment', Bill);
+            console.log("inside paynow");
+            window.location.assign("payment.html");
+
+        }
+
+
+
+        function showModalPopup(message) {
+            $("#modalMessage").text(message);
+            $("#myModal").css("display", "block");
+        }
+
+        function hideModalPopup() {
+            $("#myModal").css("display", "none");
+        }
+    </script>
+
+</head>
+
+<body class="homepage">
+    <!-- header -->
+    <nav id="headertop" class="navbar navbar-expand-md py-0">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a style="font-size: 14px;"><span class="material-symbols-outlined">
+                    distance
+                </span>88
+                LUX
+                ST.,MONTRELA,QC</a>
+            <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMainHeadertop"
+                aria-controls="navbarMainHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button> -->
+            <div class="navbar-nav ms-auto">
+                <select class="form-select languageselect" aria-label="Default select example" style="font-size:14px">
+                    <option selected>English</option>
+                    <option value="1">French</option>
+                    <option value="2">Chinese</option>
+                    <option value="3">Spanish</option>
+                </select>
+                <select class="form-select languageselect" aria-label="Default select example" style="font-size:14px">
+                    <option selected>CAD</option>
+                    <option value="1">US</option>
+                    <option value="2">EURO</option>
+                    <option value="3">CNY</option>
+                </select>
+            </div>
+            <div id="loginUser"></div>
+        </div>
+    </nav>
+
+
+
+    <!-- menu bar -->
+    <nav id="header" class="navbar navbar-expand-md">
+
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><img src="images/logohotel.png" alt="Abbott Hotel logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMainHeader"
+                aria-controls="navbarMainHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMainHeader">
+                <ul id="menulist" class="navbar-nav ms-auto ">
+                    <li class="nav-item me-0.5">
+                        <a class="nav-link active" aria-current="page" href="aboutus.html">About us</a>
+                    </li>
+                    <li class="nav-item mx-0.5">
+                        <a class="nav-link" href="dinning.html">Dinning</a>
+                    </li>
+                    <li class="nav-item mx-0.5">
+                        <a class="nav-link" href="#">Spa</a>
+                    </li>
+                    <li class="nav-item mx-0.5">
+                        <a class="nav-link" href="rooms.html">Rooms</a>
+                    </li>
+                    <li class="nav-item mx-0.5">
+                        <a class="nav-link" href="#">Events</a>
+                    </li>
+                    <li class="nav-item mx-0.5 d-flex">
+                        <div class="btn-group mx-auto dropstart">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false" data-bs-auto-close="outside">
+                                Book Now
+                            </button>
+                            <form class="dropdown-menu p-4" action="http://jac.stephmoreau.ca/submitForm/"
+                                method="post">
+                                <div class="mb-3">
+                                    <label for="checkin" class="form-label">Arrival</label>
+                                    <input type="date" class="form-control" id="checkin">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="checkout" class="form-label">Departure</label>
+                                    <input type="date" class="form-control" id="checkout">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="num-guests" class="form-label">Adults</label>
+                                    <select id="num-guests" name="num-guests">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="roomtype" class="form-label">Room Type</label>
+                                    <select id="roomtype" name="roomtype" required>
+                                        <option value="">--Select Room Type--</option>
+                                        <option value="courtyyard">Super Courtyard King</option>
+                                        <option value="seventy-seven">Seventy Seven King</option>
+                                        <option value="more">More Options</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Confirm</button>
+                            </form>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="index.html"><img class="locationimg" src="images/search.png" alt="search icon"></a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1>Your Order</h1>
+    <table id="yourOrderTable">
+
+        <!-- <tr>
+            <th>Booking ID</th>
+            <th>Arrival Date</th>
+            <th>Departure Date</th>
+            <th>Booking Bill</th>
+            <th>Payment Status</th>
+        </tr> -->
+        <!-- Add rows dynamically using JavaScript/jQuery -->
+
+    </table>
+
+    <button id="newBooking">New Booking</button>
+
+    <div id="bookingForm" style="display: none;">
+        <h2>New Booking</h2>
+        <form>
+            <label for="arrivalDate">Arrival Date:</label>
+            <input type="date" id="arrivalDate" name="arrivalDate" required><br>
+
+            <label for="departureDate">Departure Date:</label>
+            <input type="date" id="departureDate" name="departureDate" required><br>
+
+            <!-- <label for="roomType">Room Type:</label>
+            <select id="roomType" name="roomType" required>
+                <option value="single">Single Bed</option>
+                <option value="double">Double Bed</option>
+                <option value="suite">Suite</option>
+                <option value="executive">Executive Suite</option>
+            </select><br> -->
+
+            <label for="numRooms">Number of Rooms:</label>
+            <input type="number" id="numRooms" name="numRooms" required><br>
+
+            <button type="button" id="CheckAvailability">Check</button>
+            <!-- <button type="button" id="cancelBooking">Cancel</button> -->
+        </form>
+    </div>
+
+    <table id="listTable" border="1"></table>
+
+    <footer class="bg-secondary" id="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Newsletter -->
+                <div class="col-12 col-md-6 order-md-3">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="What's your email?"
+                            aria-label="What's your email?" aria-describedby="btn-newsletter">
+                        <button class="btn btn-primary" type="button" id="btn-newsletter">Sign Up</button>
+                    </div>
+                </div>
+
+                <!-- footer nav -->
+                <div id="container1" class="col-9 col-md-6 order-md-4 d-flex justify-content-end align-items-center">
+                    <a href="#" title="Abbott Hotel Reviews" class="mx-2 text-decoration-none">Reviews</a>
+                    <span class="mx-2">|</span>
+                    <a href="#" title="Frequently Asked Questions" class="mx-2 text-decoration-none">FAQ</a>
+                    <span class="mx-2">|</span>
+                    <a href="mailto:info@abbotthotel.com" class="mx-2 text-decoration-none">Contact us</a>
+                </div>
+
+            </div><!-- end row -->
+            <!-- Copyright -->
+            <div class="row">
+                <div class="col-12 text-center mt-2">
+                    <small>Copyright © 2023 Abbott Hotel. All Rights Reserved. </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <!-- jquery -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <!-- slick -->
+    <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+
+
+</body>
+
+</html>

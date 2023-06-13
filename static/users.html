@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Abbott Hotel</title>
+    <meta name="description" content="Abbott hotel">
+    <meta name="author" content="Abbott hotel">
+    <meta name="Keywords" content="Abbott, hotel">
+    <!-- boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <!-- slick -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+    <link rel="stylesheet" href="style/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="style/hotelrooms.css">
+    <script>
+        var sortBy = 'userId';
+        var currId = '';
+
+        $(document).ready(function () {
+            $("#viewAddEditPane").hide();
+            $("#loginUser").html(sessionStorage.getItem("email"));
+            refreshUserList();
+
+            function showModalPopup(message) {
+                $("#modalMessage").text(message);
+                $("#myModal").css("display", "block");
+            }
+
+            function hideModalPopup() {
+                $("#myModal").css("display", "none");
+            }
+
+            $("#showAddItem").click(function () {
+                $("input[name=userId]").val("");
+                $("input[name=Role]").val("");
+                $("input[name=FirstName]").val("");
+                $("input[name=LastName]").val("");
+                $("input[name=UserEmail]").val("");
+                $("input[name=UserAddress]").val("");
+                $("input[name=UserTel]").val("");
+                //$("input[name=UserTier]").val("");
+                // $("input[name=Password]").val("");
+                $("#viewAddEditPane").show();
+                $("#saveOrAdd").html("Add a user");
+                $("#currentCode").html("");
+                $("#delete").hide(); // Hide delete button when adding a new user
+            });
+
+            $("#cancel").click(function () {
+                $("#viewAddEditPane").hide();
+            });
+
+            $("#saveOrAdd").click(function () { // add or update
+                var userIdVal = $("input[name=userId]").val();
+                var RoleVal = $("input[name=Role]").val();
+                var FirstNameVal = $("input[name=FirstName]").val();
+                var LastNameVal = $("input[name=LastName]").val();
+                var UserEmailVal = $("input[name=UserEmail]").val();
+                var UserAddressVal = $("input[name=UserAddress]").val();
+                var UserTelVal = $("input[name=UserTel]").val();
+                //var UserTierVal = $("input[name=UserTier]").val();
+                //var PasswordVal = $("input[name=Password]").val();
+
+                // FIXME: verify values are valid
+                var userObj = {
+                    userId: userIdVal,
+                    Role: RoleVal,
+                    FirstName: FirstNameVal,
+                    LastName: LastNameVal,
+                    UserEmail: UserEmailVal,
+                    UserAddress: UserAddressVal,
+                    UserTel: UserTelVal,
+                    // UserTier: UserTierVal,
+                    //   Password: PasswordVal
+                };
+
+                $.ajax({ // FIXME: escape special characters using urlencode
+                    url: "/api/users/Update" + (currId === '' ? '' : '/' + currId),
+                    type: currId === '' ? 'POST' : 'PUT',
+                    dataType: "json",
+                    data: userObj,
+                    error: function (jqxhr, status, errorThrown) {
+                        showModalPopup("AJAX error: " + jqxhr.responseText);
+                    }
+                }).done(function () {
+                    var successMessage = (currId === '') ? "Added successfully" : "Updated successfully";
+                    showModalPopup(successMessage);
+                    // $("#viewAddEditPane").hide();
+                    refreshUserList();
+                    searchuserId = $("#searchuserId").val();
+                    searchUser(searchuserId);
+                    $("#viewAddEditPane").show();
+                    currId = '';
+                });
+            });
+
+            $("#deleteButton").click(function () {
+                if (confirm("Are you sure you want to delete this user?")) {
+                    deleteUser(currId);
+                }
+            });
+
+
+            $("#search").click(function () {
+                var searchuserId = $("#searchuserId").val();
+                searchUser(searchuserId);
+                selectUser(searchuserId);
+            });
+
+            $("#displayAll").click(function () {
+                refreshUserList();
+            });
+        });
+
+        function selectUser(userId) {
+            // currId =userId;
+            $.ajax({
+                url: "/api/users/OneUser/" + userId,
+                type: "GET",
+                dataType: "json",
+                error: function (jqxhr, status, errorThrown) {
+                    showModalPopup("AJAX error: " + jqxhr.responseText);
+                }
+            }).done(function (user) {
+                currId = userId;
+                $("#searchuserId").val(user.userId);
+                $("#currentCode").html(user.userId);
+                $("input[name=userId]").val(user.userId);
+                $("input[name=Role]").val(user.Role);
+                $("input[name=FirstName]").val(user.FirstName);
+                $("input[name=LastName]").val(user.LastName);
+                $("input[name=UserEmail]").val(user.UserEmail);
+                $("input[name=UserAddress]").val(user.UserAddress);
+                $("input[name=UserTel]").val(user.UserTel);
+                //$("input[name=UserTier]").val(user.UserTier);
+                //  $("input[name=Password]").val(user.Password);
+                $("#saveOrAdd").html("Save Changes");
+                $("#delete").hide(); // hide  delete button when an user is selected
+                $("#viewAddEditPane").show();
+            });
+        }
+
+        function refreshUserList() {
+            $.ajax({
+                url: "/api/users/AllUsers?sortBy=" + sortBy,
+                type: "GET",
+                dataType: "json",
+                error: function (jqxhr, status, errorThrown) {
+                    showModalPopup("AJAX error: " + jqxhr.responseText);
+                }
+            }).done(function (userList) {
+                var result = '<tr><th onclick="sortUserBy(\'userId\');" id="userIdTh">userId</th>' +
+                    '<th onclick="sortUserBy(\'Role\');" id="RoleTh">Role</th>' +
+                    '<th onclick="sortUserBy(\'FirstName\');" id="FirstNameTh">FirstName</th>' +
+                    '<th onclick="sortUserBy(\'LastName\');" id="LastNameTh">LastName</th>' +
+                    '<th onclick="sortUserBy(\'UserEmail\');" id="UserEmailTh">UserEmail</th>' +
+                    '<th onclick="sortUserBy(\'UserAddress\');" id="UserAddressTh">UserAddress</th>' +
+                    '<th onclick="sortUserBy(\'UserTel\');" id="UserTelTh">UserTel</th>' +
+                    //'<th onclick="sortUserBy(\'UserTier\');" id="UserTierTh">UserTier</th>' +
+                    //   '<th onclick="sortUserBy(\'Password\');" id="PasswordTh">Password</th>' +
+                    '</tr>';
+
+                for (var i = 0; i < userList.length; i++) {
+                    var user = userList[i];
+                    result += '<tr onclick="selectUser(\'' + user.userId + '\')">';
+                    result += '<td>' + user.userId + '</td>';
+                    result += '<td>' + user.Role + '</td>';
+                    result += '<td>' + user.FirstName + '</td>';
+                    result += '<td>' + user.LastName + '</td>';
+                    result += '<td>' + user.UserEmail + '</td>';
+                    result += '<td>' + user.UserAddress + '</td>';
+                    result += '<td>' + user.UserTel + '</td>';
+                    //result += '<td>' + user.UserTier + '</td>';
+                    //    result += '<td>' + user.Password + '</td>';
+                    result += '</tr>';
+                }
+
+                $("#listTable").html(result);
+            });
+        }
+
+        function sortUserBy(order) {
+            sortBy = order;
+            refreshUserList();
+        }
+
+        function deleteUser(userId) {
+            $.ajax({
+                url: "/api/users/" + userId,
+                type: "DELETE",
+                dataType: "json",
+                error: function (jqxhr, status, errorThrown) {
+                    showModalPopup("AJAX error: " + jqxhr.responseText);
+                }
+            }).done(function () {
+                showModalPopup("User deleted successfully");
+                refreshUserList();
+                $("#viewAddEditPane").hide();
+                currCode = '';
+            });
+        }
+
+        function searchUser(userId) {
+            $.ajax({
+                url: "/api/users/OneUser/" + userId,
+                type: "GET",
+                dataType: "json",
+                error: function (jqxhr, status, errorThrown) {
+                    showModalPopup("AJAX error: " + jqxhr.responseText);
+                }
+            }).done(function (user) {
+                if (user) {
+                    var result = '<tr><th onclick="sortUserBy(\'userId\');" id="userIdTh">userId</th>' +
+                        '<th onclick="sortUserBy(\'Role\');" id="RoleTh">Role</th>' +
+                        '<th onclick="sortUserBy(\'FirstName\');" id="FirstNameTh">FirstName</th>' +
+                        '<th onclick="sortUserBy(\'LastName\');" id="LastNameTh">LastName</th>' +
+                        '<th onclick="sortUserBy(\'UserEmail\');" id="UserEmailTh">UserEmail</th>' +
+                        '<th onclick="sortUserBy(\'UserAddress\');" id="UserAddressTh">UserAddress</th>' +
+                        '<th onclick="sortUserBy(\'UserTel\');" id="UserTelTh">UserTel</th>' +
+                        //'<th onclick="sortUserBy(\'UserTier\');" id="UserTierTh">UserTier</th>' +
+                        //   '<th onclick="sortUserBy(\'Password\');" id="PasswordTh">Password</th>' +
+                        '</tr>';
+                    result += '<tr onclick="selectUser(\'' + user.userId + '\')">';
+                    result += '<td>' + user.userId + '</td>';
+                    result += '<td>' + user.Role + '</td>';
+                    result += '<td>' + user.FirstName + '</td>';
+                    result += '<td>' + user.LastName + '</td>';
+                    result += '<td>' + user.UserEmail + '</td>';
+                    result += '<td>' + user.UserAddress + '</td>';
+                    result += '<td>' + user.UserTel + '</td>';
+                    //result += '<td>' + user.UserTier + '</td>';
+                    //    result += '<td>' + user.Password + '</td>';
+                    result += '</tr>';
+
+                    // Clear the table body and append the result
+                    $("#listTable").html(result);
+                } else {
+                    $("#listTable").html('<tr><td colspan="4">User not found</td></tr>');
+                }
+            });
+        }
+
+    </script>
+</head>
+
+<body class="homepage">
+    <!-- header -->
+    <nav id="headertop" class="navbar navbar-expand-md py-0">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a style="font-size: 14px;"><span class="material-symbols-outlined">
+                    distance
+                </span>88
+                LUX
+                ST.,MONTRELA,QC</a>
+            <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMainHeadertop"
+                aria-controls="navbarMainHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button> -->
+            <div class="navbar-nav ms-auto">
+                <select class="form-select languageselect" aria-label="Default select example" style="font-size:14px">
+                    <option selected>English</option>
+                    <option value="1">French</option>
+                    <option value="2">Chinese</option>
+                    <option value="3">Spanish</option>
+                </select>
+                <select class="form-select languageselect" aria-label="Default select example" style="font-size:14px">
+                    <option selected>CAD</option>
+                    <option value="1">US</option>
+                    <option value="2">EURO</option>
+                    <option value="3">CNY</option>
+                </select>
+            </div>
+            <div id="loginUser"></div>
+        </div>
+    </nav>
+
+
+    <!-- menu bar -->
+    <nav id="header" class="navbar navbar-expand-md">
+
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><img src="images/logohotel.png" alt="Abbott Hotel logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMainHeader"
+                aria-controls="navbarMainHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMainHeader">
+                <ul id="menulist" class="navbar-nav ms-auto ">
+                    <li class="nav-item me-0.5">
+                        <a class="nav-link active" aria-current="page" href="aboutus.html">About us</a>
+                    </li>
+                    <li class="nav-item mx-0.5">
+                        <a class="nav-link" href="dinning.html">Dinning</a>
+                    </li>
+                    <li class="nav-item mx-0.5">
+                        <a class="nav-link" href="#">Spa</a>
+                    </li>
+                    <li class="nav-item mx-0.5">
+                        <a class="nav-link" href="rooms.html">Rooms</a>
+                    </li>
+                    <li class="nav-item mx-0.5">
+                        <a class="nav-link" href="#">Events</a>
+                    </li>
+                    <li class="nav-item mx-0.5 d-flex">
+                        <div class="btn-group mx-auto dropstart">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false" data-bs-auto-close="outside">
+                                Book Now
+                            </button>
+                            <form class="dropdown-menu p-4" action="http://jac.stephmoreau.ca/submitForm/"
+                                method="post">
+                                <div class="mb-3">
+                                    <label for="checkin" class="form-label">Arrival</label>
+                                    <input type="date" class="form-control" id="checkin">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="checkout" class="form-label">Departure</label>
+                                    <input type="date" class="form-control" id="checkout">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="num-guests" class="form-label">Adults</label>
+                                    <select id="num-guests" name="num-guests">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="roomtype" class="form-label">Room Type</label>
+                                    <select id="roomtype" name="roomtype" required>
+                                        <option value="">--Select Room Type--</option>
+                                        <option value="courtyyard">Super Courtyard King</option>
+                                        <option value="seventy-seven">Seventy Seven King</option>
+                                        <option value="more">More Options</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Confirm</button>
+                            </form>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="index.html"><img class="locationimg" src="images/search.png" alt="search icon"></a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <center>
+
+        <div id="centerContent">
+            <div id="listPane">
+                <!--   <button id="showAddItem"> Show Update Form</button>   -->
+                <button id="displayAll">Display All Users</button>
+                <input type="text" id="searchuserId" placeholder="Search by userId">
+                <button id="search">Search</button>
+                <table id="listTable" border="1"></table>
+            </div>
+            <div id="viewAddEditPane">
+                Current User: <span id="currentuserId"></span><br>
+                userId: <input type="text" name="userId"><br>
+                Role: <input type="text" name="Role"><br>
+                FirstName: <input type="text" name="FirstName"><br>
+                LastName: <input type="text" name="LastName"><br>
+                UserEmail: <input type="text" name="UserEmail"><br>
+                UserAddress: <input type="text" name="UserAddress"><br>
+                UserTel: <input type="text" name="UserTel"><br>
+                <!--UserTier: <input type="text" name="UserTier"><br> -->
+                <!--  Password: <input type="text" name="Password"><br> -->
+                <button id="saveOrAdd">Save or Add</button>
+                <button id="deleteButton">Delete</button>
+                <button id="cancel">Cancel</button>
+            </div>
+
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p id="modalMessage"></p>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Event listener for modal close button
+            $(".close").click(function () {
+                hideModalPopup();
+            });
+
+            // Function to show modal popup with message
+            function showModalPopup(message) {
+                $("#modalMessage").text(message);
+                $("#myModal").css("display", "block");
+            }
+
+            // Function to hide modal popup
+            function hideModalPopup() {
+                $("#myModal").css("display", "none");
+            }
+        </script>
+
+    </center>
+    <footer class="bg-secondary" id="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Newsletter -->
+                <div class="col-12 col-md-6 order-md-3">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="What's your email?"
+                            aria-label="What's your email?" aria-describedby="btn-newsletter">
+                        <button class="btn btn-primary" type="button" id="btn-newsletter">Sign Up</button>
+                    </div>
+                </div>
+
+                <!-- footer nav -->
+                <div id="container1" class="col-9 col-md-6 order-md-4 d-flex justify-content-end align-items-center">
+                    <a href="#" title="Abbott Hotel Reviews" class="mx-2 text-decoration-none">Reviews</a>
+                    <span class="mx-2">|</span>
+                    <a href="#" title="Frequently Asked Questions" class="mx-2 text-decoration-none">FAQ</a>
+                    <span class="mx-2">|</span>
+                    <a href="mailto:info@abbotthotel.com" class="mx-2 text-decoration-none">Contact us</a>
+                </div>
+
+            </div><!-- end row -->
+            <!-- Copyright -->
+            <div class="row">
+                <div class="col-12 text-center mt-2">
+                    <small>Copyright © 2023 Abbott Hotel. All Rights Reserved. </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <!-- jquery -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <!-- slick -->
+    <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+
+
+</body>
+
+</html>

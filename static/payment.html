@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Abbott Hotel</title>
+    <meta name="description" content="Abbott hotel">
+    <meta name="author" content="Abbott hotel">
+    <meta name="Keywords" content="Abbott, hotel">
+    <!-- boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="style/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="style/payment.css">
+    <script>
+        $(document).ready(function () {
+
+            var totalprice = sessionStorage.getItem('totalPayment');
+            console.log(totalprice);
+            $("#totalPrice").text(totalprice);
+        });
+
+    </script>
+</head>
+
+<body class="homepage">
+    <!-- header -->
+    <nav id="headertop" class="navbar navbar-expand-md py-0">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a style="font-size: 14px;"><span class="material-symbols-outlined">
+                    distance
+                </span>88
+                LUX
+                ST.,MONTRELA,QC</a>
+            <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMainHeadertop"
+                aria-controls="navbarMainHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button> -->
+            <div class="navbar-nav ms-auto">
+                <select class="form-select languageselect" aria-label="Default select example" style="font-size:14px">
+                    <option selected>English</option>
+                    <option value="1">French</option>
+                    <option value="2">Chinese</option>
+                    <option value="3">Spanish</option>
+                </select>
+                <select class="form-select languageselect" aria-label="Default select example" style="font-size:14px">
+                    <option selected>CAD</option>
+                    <option value="1">US</option>
+                    <option value="2">EURO</option>
+                    <option value="3">CNY</option>
+                </select>
+            </div>
+            <div id="loginUser"></div>
+        </div>
+    </nav>
+
+
+    <!-- menu bar -->
+    <nav id="header" class="navbar navbar-expand-md">
+
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><img src="images/logohotel.png" alt="Abbott Hotel logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMainHeader"
+                aria-controls="navbarMainHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMainHeader">
+                <ul id="menulist" class="navbar-nav ms-auto ">
+                    <li class="nav-item me-0.5">
+                        <a class="nav-link active" aria-current="page" href="aboutus.html">About us</a>
+                    </li>
+                    <li class="nav-item mx-0.5">
+                        <a class="nav-link" href="dinning.html">Dinning</a>
+                    </li>
+                    <li class="nav-item mx-0.5">
+                        <a class="nav-link" href="#">Spa</a>
+                    </li>
+                    <li class="nav-item mx-0.5">
+                        <a class="nav-link" href="rooms.html">Rooms</a>
+                    </li>
+                    <li class="nav-item mx-0.5">
+                        <a class="nav-link" href="#">Events</a>
+                    </li>
+                    <li class="nav-item mx-0.5 d-flex">
+                        <div class="btn-group mx-auto dropstart">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false" data-bs-auto-close="outside">
+                                Book Now
+                            </button>
+                            <form class="dropdown-menu p-4" action="http://jac.stephmoreau.ca/submitForm/"
+                                method="post">
+                                <div class="mb-3">
+                                    <label for="checkin" class="form-label">Arrival</label>
+                                    <input type="date" class="form-control" id="checkin">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="checkout" class="form-label">Departure</label>
+                                    <input type="date" class="form-control" id="checkout">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="num-guests" class="form-label">Adults</label>
+                                    <select id="num-guests" name="num-guests">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="roomtype" class="form-label">Room Type</label>
+                                    <select id="roomtype" name="roomtype" required>
+                                        <option value="">--Select Room Type--</option>
+                                        <option value="courtyyard">Super Courtyard King</option>
+                                        <option value="seventy-seven">Seventy Seven King</option>
+                                        <option value="more">More Options</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Confirm</button>
+                            </form>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="index.html"><img class="locationimg" src="images/search.png" alt="search icon"></a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <center>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="room-info">
+                        <h3>Booking Information</h3>
+                        <!-- <img id="roomPic" src="" alt="Room Picture">
+                        <p id="roomType">Room Type: </p>
+                        <p id="pricePerNight">Price per Night: </p>
+                        <p>Check-in Date: <input type="date" id="checkInDate"></p>
+                        <p>Check-out Date: <input type="date" id="checkOutDate"></p> -->
+                        <p id="totalBill">Total Booking Bill:</p>
+                        <span id="totalPrice"></span>
+
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="panel panel-default text-left">
+                        <div class="panel-body">
+                            <h2>Payment Details</h2>
+                            <h3 contenteditable="true">Customer Information</h3>
+                            <input type="text" placeholder="First Name" class="information"><br>
+                            <input type="text" placeholder="Last Name" class="information"><br>
+                            <input type="text" placeholder="Mobile Number" class="information"><br>
+                            <input type="text" placeholder="Address" class="information"><br>
+                        </div>
+                    </div>
+                    <div class="Abbott">
+                        <h3 contenteditable="true">Customer Card Information</h3>
+                        <p>Payment information is only needed to hold your reservation.</p>
+                        <input type="text" placeholder="Name of card" class="information"><br>
+                        <input type="text" placeholder="Debit/Credit Card Number" class="information"><br>
+                        <div>
+                            <input type="month" placeholder="Expire Date" class="information2">
+                            <input type="text" placeholder="Security Code" class="information1"><br>
+                        </div>
+                    </div>
+                    <div class="Abbott">
+                        <h3>Important information</h3>
+                        <ul>
+                            <li>Cancellations or changes within 7 days before check-in date are subject to a fee equal
+                                to 50% of the total amount paid for the reservation.</li>
+                            <li>No-shows are subject to a fee equal to 100% of the total amount paid for the
+                                reservation.</li>
+                            <li>We use secure transmission and encrypted storage to protect your personal information.
+                            </li>
+                        </ul>
+                        <br>
+                        <button id="complete">Complete Booking</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Function to update the room information
+            function updateRoomInformation(roomPic, roomType, pricePerNight, totalBill) {
+                $("#roomPic").attr("src", roomPic);
+                $("#roomType").text("Room Type: " + roomType);
+                $("#pricePerNight").text("Price per Night: " + pricePerNight);
+                $("#totalBill").text("Total Booking Bill: " + totalBill);
+            }
+
+            // Get the room information from useraccount.html
+            var roomPic = "";
+            var roomType = "";
+            var pricePerNight = "";
+            var totalBill = "";
+
+            // Call the function to update the room information
+            updateRoomInformation(roomPic, roomType, pricePerNight, totalBill);
+        </script>
+
+
+
+    </center>
+    <footer class="bg-secondary" id="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Newsletter -->
+                <div class="col-12 col-md-6 order-md-3">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="What's your email?"
+                            aria-label="What's your email?" aria-describedby="btn-newsletter">
+                        <button class="btn btn-primary" type="button" id="btn-newsletter">Sign Up</button>
+                    </div>
+                </div>
+
+                <!-- footer nav -->
+                <div id="container1" class="col-9 col-md-6 order-md-4 d-flex justify-content-end align-items-center">
+                    <a href="#" title="Abbott Hotel Reviews" class="mx-2 text-decoration-none">Reviews</a>
+                    <span class="mx-2">|</span>
+                    <a href="#" title="Frequently Asked Questions" class="mx-2 text-decoration-none">FAQ</a>
+                    <span class="mx-2">|</span>
+                    <a href="mailto:info@abbotthotel.com" class="mx-2 text-decoration-none">Contact us</a>
+                </div>
+
+            </div><!-- end row -->
+            <!-- Copyright -->
+            <div class="row">
+                <div class="col-12 text-center mt-2">
+                    <small>Copyright © 2023 Abbott Hotel. All Rights Reserved. </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <!-- jquery -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+
+</body>
+
+</html>

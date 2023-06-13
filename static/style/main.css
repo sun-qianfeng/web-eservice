@@ -1,0 +1,366 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Qwigley&family=Roboto:wght@300;400;700&display=swap');
+
+/*
+ Gold = #E2C76B
+ LightGold = #C7A55B
+ Black = #242A34
+
+ font-family: 'Inter', monospace;
+ font-family: 'Roboto', sans-serif;
+ font-family: 'Qwigley, sans-serif;
+ */
+
+
+ /* headings */
+ h1, h2, h3, h4{font-family: 'Inter','Consolas', monospace;}
+
+ body{font-family:'Roboto', sans-serif ;}
+
+ /* prevent side from being too wide */
+.container,
+.container-fluid {
+	max-width: 1600px;
+}
+
+
+/* MEDIA QUERIES */
+
+
+@media screen and (min-width: 516px) {
+	h1 {
+		font-size: 2.25em;
+	}
+}
+
+@media screen and (min-width: 600px) {
+	h1 {
+		font-size: 2.5em;
+	}
+}
+
+@media screen and (min-width: 700px) {
+	h1 {
+		font-size: 2.8em;
+	}
+
+	.testimonial-items {
+		font-size: 1em;
+	}
+}
+
+@media screen and (min-width: 789px) and (max-width: 991px) {
+	.homepage h1 {
+		font-size: 3.7em;
+	}
+}
+
+
+.slick-dots {
+	display: flex;
+	justify-content: center;
+	margin: 0;
+	padding: 1rem 0;
+	list-style-type: none;
+  }
+  
+  .slick-dots li {
+	margin: 0 0.25rem;
+  }
+  
+  .slick-dots button {
+	display: block;
+	width: 1rem;
+	height: 1rem;
+	padding: 0;
+	border: none;
+	border-radius: 100%;
+	background-color: #C7A55B;
+	text-indent: -9999px;
+  }
+  
+  .slick-dots li.slick-active button {
+	background-color: orange;
+  }
+  
+ 
+
+
+/* ADDED  */
+.btn .btn-primary{
+		background-color: #C7A55B;
+}
+
+
+.locationimg{
+	width:32px;
+	height:32px;
+}
+
+.btn {
+	font-weight: 700;
+	/* bold */
+}
+
+.btn.btn-light {
+	background-color: #E2C76B;}
+
+	select.form-select{
+		background-color: #E2C76B;
+		border:none;
+	}
+
+	/*MODIFIED  */
+	/* top nav, bottom nav */
+	#header,
+	footer {
+		    background-color:white;
+			color: #242a34;
+	}
+	
+	/*MODIFIED  */
+	#headertop{
+		background-color: #E2C76B;
+		
+	}
+
+#menulist{
+	font-size:1.2em;;
+}
+
+#menulist li a:not(:last-child)::after {
+	content: "|";
+	padding: 0.25em;
+	/* color:black; */
+}
+#header a,
+footer a {
+	
+			color: #242a34;
+}
+
+#header a.btn {
+	color: #242a34;
+}
+
+/* #header {
+	margin-bottom: 1em;
+} */
+
+footer h3 {
+	font-size: 1.3em;
+	color: #242A34;
+}
+
+#footer {
+	padding-top: 1em;
+	padding-bottom: 1em;
+	margin-top: 1em;
+	background-color: #242a34;
+}
+
+#footer nav a {
+	text-decoration: none;
+}
+
+/*
+#footer nav a::after{
+content: "|";
+padding: 0 .25em;
+}
+#footer nav a:last-child::after{
+content: "";
+padding: 0;
+}
+*/
+
+#footer nav a:not(:last-child)::after {
+	content: "|";
+	padding: 0.25em;
+}
+
+
+.adv-icon {
+	font-size: 0.75em;
+	text-align: center;
+}
+
+.adv-icon .bi {
+	font-size: 4em;
+	color: #C7A55B;
+}
+
+.navbar-brand img {
+	max-height: 30px;
+}
+
+/* index */
+#adv-test section {
+	margin: 1em 0;
+}
+
+select.form-select{
+	background-color: #E2C76B;
+	border:none;
+}
+/* sunqianfeng*/
+.container, .container-fluid{
+	max-width: 1600px;
+}
+
+
+/* headings */
+h1, h2, h3, h4, h5, h6
+.h1, .h2, .h3, .h4, .h5, .h6 {
+	color: #000;
+	font-family: inter, monospace;
+}
+
+h1 {
+	letter-spacing: 3px;
+}
+
+.btn {
+	font-weight: 700;
+	/* bold */
+}
+.boldp{
+  font-weight: bold;
+  margin-top: 0px;
+}
+
+
+
+
+
+.description{
+    font-family: inter;
+  }
+ 
+  .colored-cell{
+    background-color: #dabe66;
+  }
+  
+  .btn.btn-primary{
+    background-color: #dabe66;
+    border-color: #dabe66;
+  }
+  #roomtab, #room-tab{
+    font-family: qwigley;
+    font-size: 3em;
+    font-weight: bolder;
+    text-align: left;
+    margin-top: 10px;
+  }
+  
+
+
+.pricetitle{
+    font-weight: bold;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+.moroptions{
+    text-align: center;
+}
+.centered-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:5px ; 
+    margin-bottom: 15px;
+  }
+  
+  .centered-text p {
+    text-align: center;
+  }
+  /*dinning*/
+  .discover{
+	font-family: 'Qwigley', sans-serif;
+	font-size: 40px;
+}
+.DinningTitle {
+	font-family: 'Roboto', sans-serif;
+	font-size: 28px;
+	font-weight: bold;
+	line-height: 1.5;
+  }
+  
+  .DinningText {
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
+	line-height: 1.5;
+  }
+  .slick-prev:before,
+
+ .slick-next:before {
+
+    color: #34475C;
+
+ }
+	  
+
+
+ /* center part of login */
+ #sign_div {
+ 	width: 30%;
+ 	/* border: 1px solid black; */
+ }
+
+ #sign_div h1,
+ #sign_div p {
+ 	text-align: left;
+ }
+
+ #res {
+ 	text-decoration: none;
+ }
+
+ #email,
+ #password {
+ 	width: 100%;
+ 	margin-top: 3%;
+ 	margin-bottom: 2%;
+ 	height: 50px;
+ 	font-size: 18px;
+ 	/* padding-left: 1%; */
+ }
+
+ #radio {
+ 	align-content: left;
+ }
+
+ #btn {
+ 	margin-top: 3%;
+ 	height: 45px;
+ 	width: 100%;
+ 	font-size: 18px;
+ 	background-color: #C7A55B;
+ 	border: none;
+ 	font-weight: 600;
+ 	color: white;
+ }
+
+ .sign_pass {
+ 	text-align: center;
+ }
+
+ #login{
+	width:60px;
+ }
+ /* added by chang */
+ #aid{
+	text-decoration: none;
+ }
+
+
+ #aid:link,#aid:visited,#aid:hover,#aid:active {
+ 	color: black;
+ 	text-decoration: none;
+ }

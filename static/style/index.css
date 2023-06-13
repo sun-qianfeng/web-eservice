@@ -1,0 +1,393 @@
+
+
+
+#compass {
+  margin-left: 7%;
+  font-family: "Alex Brush";
+}
+
+
+#compass {
+  font-size: 20px;
+}
+#frontimg {
+  padding-top: 5%;
+  background-image: url("https://forever.travel-assets.com/flex/flexmanager/images/2021/11/01/ORB_Storefront_6_imgB_1400x600_20211028.jpg");
+  width: 100%;
+  height: 400px;
+}
+#tags {
+  margin-top: 4%;
+  /* width: 70%;
+    height: 50%;
+    background-color: white; */
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+}
+#tag {
+  background-color: white;
+  width: 70%;
+  height: 50%;
+  font-size: 18px;
+}
+.input,
+.input1,
+.input2 {
+  margin-left: 1%;
+  margin-right: 1%;
+  height: 30px;
+  font-size: 18px;
+  
+  border-radius: 5px;
+
+}
+
+.input1,
+.input2 {
+  width: 25%;
+}
+#btn {
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-top: 6%;
+  margin-bottom: 3%;
+  font-size: 14px;
+  border-radius: 5px;
+  background-color: #c83259;
+  color: white;
+  border: 1px solid #c83259;
+}
+#main {
+  background-color: rgb(243, 240, 240);
+}
+#three_cards {
+  display: flex;
+  /* width: 50%; */
+  /* grid-template-columns: repeat(1fr,3);
+*/
+}
+.three {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+  background-color: white;
+  display: flex;
+  margin: 4%;
+  margin-top: 4%;
+  width: 40%;
+  text-align: left;
+  padding-left: 1%;
+  padding-bottom: 1%;
+}
+.three_img {
+  margin-top: 10%;
+  width: 40%;
+  height: 50%;
+}
+.inside_three {
+  padding-left: 6%;
+  padding-right: 1%;
+}
+
+.four1 img {
+  width: 95%;
+  border-radius: 5px;
+}
+.four2 img {
+  width: 95%;
+  border-radius: 5px;
+}
+.four3 img {
+  width: 95%;
+  border-radius: 5px;
+}
+.four4 img {
+  width: 95%;
+  border-radius: 5px;
+}
+
+#four_cards {
+  display: grid;
+  margin-left: 4%;
+  margin-right: 4%;
+  grid-template-columns: repeat(4, 1fr);
+}
+#add1 img {
+  width: 100%;
+  height: 200px;
+}
+#add1 {
+  display: grid;
+  grid-template-columns: 700px 520px;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 3%;
+}
+#add2 {
+  margin-top: 4%;
+  display: grid;
+  margin-left: 4%;
+  margin-right: 4%;
+  gap: 2%;
+  grid-template-columns: 900px 540px;
+
+  height: 260px;
+}
+#sub_add1 {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+.icon1 {
+  padding-top: 40%;
+  height: 20%;
+  width: 30%;
+}
+.icon2 {
+  text-align: left;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  gap: 10%;
+  background-color: white;
+  display: grid;
+  padding-left: 3%;
+  height: 100px;
+  grid-template-columns: 300px 50px;
+}
+#icon {
+  margin-left: 4%;
+  margin-right: 4%;
+  display: grid;
+  gap: 2%;
+  height: 100px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+#tip2 {
+  /* opacity: 0.5; */
+  height: 80%;
+  width: 100%;
+}
+#tips {
+  margin-left: 4%;
+  margin-right: 4%;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2%;
+}
+#qr {
+  /* border: 1px solid red; */
+  /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+  margin-top: 4%;
+  margin-left: 4%;
+  margin-right: 4%;
+  display: grid;
+  grid-template-columns: 400px 600px 350px;
+  /* grid-template-columns: repeat(3,1fr); */
+  gap: 2%;
+  background-color: white;
+  text-align: left;
+}
+.destinations {
+  display: flex;
+  justify-content: space-between;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  background-color: white;
+  margin-top: 3%;
+}
+.destinations h2 {
+  font-size: 20px;
+  padding-left: 3%;
+}
+.destinations img {
+  margin-top: 5%;
+  width: 3%;
+  height: 20%;
+  padding-right: 3%;
+}
+#distination_main {
+  gap: 2%;
+  margin-right: 4%;
+  margin-left: 4%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+
+
+#tip1{
+  position: relative;
+  height: 82%;
+  margin: 1%;
+text-align: center;
+color: white;
+}
+.four5{
+
+  /* border: 1px solid black; */
+  position: relative;
+  height: 82%;
+  margin: 1%;
+text-align: center;
+color: white;
+}
+.four1{
+  position: relative;
+  height: 82%;
+  margin: 1%;
+text-align: center;
+color: white;
+}
+.four1 img{
+  width: 100%;
+  height: 100%;
+}
+.bottom-left {
+position: absolute;
+bottom: 8px;
+text-shadow: -1px 1px 0 #000,
+                1px 1px 0 #000,
+               1px -1px 0 #000,
+              -1px -1px 0 #000;
+text-align: left;
+left: 16px;
+}
+
+/* small */
+@media screen and (min-width: 300px) and (max-width:650px){
+  #four_cards {
+    display: grid;
+    margin-left: 4%;
+    margin-right: 4%;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  #three_cards {
+   display: none;
+  }
+  #add1 {
+    display: grid;
+    grid-template-columns: 300px 200px;
+    margin-left: 4%;
+    margin-right: 4%;
+    margin-top: 3%;
+  }
+  #add2 {
+    margin-top: 4%;
+    display: grid;
+    margin-left: 4%;
+    margin-right: 4%;
+    gap: 2%;
+    grid-template-columns: 350px 100px;
+  
+    height: 260px;
+  }
+  #sub_add2{
+    height: 50%;
+  }
+  #inner_sub_add1{
+    font-size: 10px;
+  }
+  #icon {
+   
+    display: none
+    ;
+ 
+  }
+  #tips {
+    margin-left: 4%;
+    margin-right: 4%;
+  
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2%;
+  }
+  #qr_img{
+    display: none;
+  }
+  #qr_mob{
+    width: 40%;
+  }
+  #qr_info{
+    width: 50%;
+    height: 20%;
+  }
+  #qr {
+  display: none;
+  }
+  #distination_main {
+    gap: 2%;
+    margin-right: 4%;
+    margin-left: 4%;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  #footer {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    margin-right: 4%;
+    margin-left: 4%;
+  }
+}
+/* medium */
+@media screen and (min-width: 651px) and (max-width:950px){
+  #four_cards {
+    display: grid;
+  
+    grid-template-columns: repeat(1, 1fr);
+  }
+  #add1 {
+    display: grid;
+    grid-template-columns: 450px 320px;
+    margin-left: 4%;
+ 
+    margin-top: 3%;
+  }
+  #add2 {
+    margin-top: 4%;
+    display: grid;
+    margin-left: 4%;
+   
+    gap: 2%;
+    grid-template-columns: 500px 240px;
+  
+    height: 260px;
+  }
+  #sub_add2{
+    height: 60%;
+  }
+  #inner_sub_add1{
+    font-size: 14px;
+  }
+  #tips {
+    margin-left: 4%;
+
+  
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2%;
+  }
+  #qr_img{
+    display: none;
+  }
+  #qr_mob{
+    width: 70%;
+  }
+  #qr_info{
+    width: 50%;
+    height: 20%;
+  }
+  #qr {
+  
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    margin-top: 4%;
+    margin-left: 4%;
+ 
+    display: grid;
+    grid-template-columns: 400px 350px;
+  
+    background-color: white;
+    text-align: left;
+  }
+ 
+}

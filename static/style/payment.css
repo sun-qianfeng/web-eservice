@@ -1,0 +1,50 @@
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .panel-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .Abbott {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .information {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .information2, .information1 {
+    width: 45%;
+    padding:5px;
+    margin-bottom: 10px;
+  }
+  
+  ul {
+    text-align: left;
+  }
+  
+  button#complete {
+    margin-top: 20px;
+  }
+
+  .room-info {
+    margin-top: 70px; 
+  }
+  

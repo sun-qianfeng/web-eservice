@@ -1,0 +1,215 @@
+<<2023-06-05 Li >>
+1. What I have done since last Scrum?
+   - wrote project propsal draft
+   - draw entity relationship diagram
+   - confirm project title
+   - search APIs
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - finish and submit proposal after the meeting with teacher
+   - create github repositories
+   - create database
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-05 Chang >>
+1. What I have done since last Scrum?
+   - finish Mockups
+   - search APIs
+   - revise proposal draft
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - prepare html
+   - setup github 
+   - setup database
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-05 Qianfeng >>
+1. What I have done since last Scrum?
+   - created project plan
+   - API research
+   - wrote proposal draft
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - modify proposal
+   - setup GitHub
+   - setup database
+   - start implement
+3. Where do I need assistance? What do I need to figure out?
+   - how to find useful APIs
+
+<<2023-06-06 Li >>
+1. What I have done since last Scrum?
+   - revised project proposal
+   - created github repositories
+   - created database
+   - created Trello boards
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - start implement backend
+   - submit the proposal
+   - create tables
+   - test connection
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-06 Chang >>
+1. What I have done since last Scrum?
+   - index.html draft
+   - setup github 
+   - setup database
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - finish index.html
+3. Where do I need assistance? What do I need to figure out?
+   - I need to get familiar with Bootstrap to design our index.html
+
+<<2023-06-06 Qianfeng >>
+1. What I have done since last Scrum?
+   - setup GitHub
+   - setup database
+   - start implement
+   - revised proposal 
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - finish and submit the proposal
+   - start implement
+3. Where do I need assistance? What do I need to figure out?
+   - use of API and database
+
+<<2023-06-07 Li >>
+1. What I have done since last Scrum?
+   -submitted proposal
+   - build structure of server
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - implement backend server
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-07 Chang >>
+1. What I have done / not done since last Scrum?
+   - index.html
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - login function
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-07 Qianfeng >>
+1. What I have done / not done since last Scrum?
+   - finished/submitted proposal
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - booking.html
+3. Where do I need assistance? What do I need to figure out?
+  - add login and register in the index page
+
+<<2023-06-08 Li >>
+1. What I have done / not done since last Scrum?
+  - modified website 
+  - backend implement>> not finished yet 
+2. What I plan to do from this scrum to next? (next 24 hours)
+  - keep working on register/login function
+3. Where do I need assistance? What do I need to figure out?
+  - POST / GET Api test
+
+<<2023-06-08 Chang >>
+1. What I have done / not done since last Scrum?
+  - login.html
+  - set up register function >> not finished yet
+2. What I plan to do from this scrum to next? (next 24 hours)
+  - keep working on register/login function
+3. Where do I need assistance? What do I need to figure out?
+  - server connection error
+
+<<2023-06-08 Qianfeng >>
+1. What I have done / not done since last Scrum?
+  - room.html
+  - server connection >> not finished yet
+2. What I plan to do from this scrum to next? (next 24 hours)
+  - keep working on room/booking function
+3. Where do I need assistance? What do I need to figure out?
+  - send data package to server
+
+<<2023-06-09 Li >>
+1. What I have done / not done since last Scrum?
+  - finish hotelrooms  models/controller/website/routes
+  - basic login/registration function
+2. What I plan to do from this scrum to next? (next 24 hours)
+  - test and improve hotelrooms
+  - buildup userdata models/controller/website/routes
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-09 Chang >>
+1. What I have done / not done since last Scrum?
+   -finish basic login/registration function
+2. What I plan to do from this scrum to next? (next 24 hours)
+   -imporve login/registration fuction
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-09 Qianfeng >>
+1. What I have done / not done since last Scrum?
+   -useraccount.html buildup
+   -continue room/booking function
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - test useraccount.html
+   - continue room/booking function
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-10 Li >>
+1. What I have done / not done since last Scrum?
+   -hotelroom.html update
+   -build up user.html
+   -Mid Progress Demo
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - test user.html
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-10 Chang >>
+1. What I have done / not done since last Scrum?
+   - pass user account information to booking.html
+   - Mid Progress Demo
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - Registration / login validation
+   - change alert to modal
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-10 Qianfeng >>
+1. What I have done / not done since last Scrum?
+   - test useraccount.html
+   - continue room/booking function
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - buildup fuction that admin can access all booking information
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-11 Li >>
+1. What I have done / not done since last Scrum?
+   - test user.html
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - test and modify the webpage
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-11 Chang >>
+1. What I have done / not done since last Scrum?
+   - Registration / login validation
+   - change alert to modal
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - auth for admin and user
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-11 Qianfeng >>
+1. What I have done / not done since last Scrum?
+   - buildup fuction that admin can access all booking information
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - test and modify the webpage
+3. Where do I need assistance? What do I need to figure out?
+
+
+<<2023-06-12 Li >>
+1. What I have done / not done since last Scrum?
+   - test and modify the webpage
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - final testing
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-12 Chang >>
+1. What I have done / not done since last Scrum?
+   - auth for admin and user
+2. What I plan to do from this scrum to next? (next 24 hours) 
+   - final testing
+3. Where do I need assistance? What do I need to figure out?
+
+<<2023-06-12 Qianfeng >>
+1. What I have done / not done since last Scrum?
+   - test and modify the webpage
+2. What I plan to do from this scrum to next? (next 24 hours)
+   - final testing
+3. Where do I need assistance? What do I need to figure out?
